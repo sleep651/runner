@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="api">
+	<typeAlias alias="UserAccount" type="com.apps.mobile.domain.UserAccount"/>
+
+	<select id="isCodeLogonSuccess" resultClass="UserAccount" parameterClass="java.util.HashMap">
+		select t.user_id,
+			t.user_name,
+			t.org_no,
+			t.dep_code,
+			t.mobile,
+			t.email,
+			t.mobile2,
+			t.status,
+			t.crt_time,
+			t.remark
+		from t_setp_user t
+		where 1=1 
+		<isNotEmpty property="mobile">
+			and t.mobile='$mobile$'
+		</isNotEmpty>
+		<isNotEmpty property="pwd">
+			and t.pwd='$pwd$'
+		</isNotEmpty>
+	</select> 
+	
+	<insert id="insertSetpLogon" parameterClass="java.util.HashMap">
+		insert into t_setp_logon
+		(
+			user_id,
+			logdate,
+			result,
+			remark
+		)
+		values(
+		'$user_id$',
+		sysdate,
+		'$result$',
+		'$remark$'
+		)
+	</insert>
+	
+	<insert id="insertStepNumber" parameterClass="java.util.HashMap">
+		insert into t_setp_number
+		(
+			user_id,
+			setp_num,
+			deal_time,
+			remark1,
+			remark2
+		)
+		values(
+		'$user_id$',
+		'$setp_num$',
+		sysdate,
+		'$remark1$',
+		'$remark2$'
+		)
+	</insert>
+	
+	<select id="getUserRankList" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+		select
+		    b.user_name,/*姓名*/
+		    sum(a.setp_num) setp_num,/*步数*/
+		    rank() over(order by sum(a.setp_num) desc  nulls last) rank1,/*分行中排名*/
+		    rank() over(partition by c.p_org_no order by sum(a.setp_num) desc  nulls last) rank2/*部门中排名*/
+		  from t_setp_number a,t_setp_user b,t_sys_org_info c
+		 where a.user_id=b.user_id
+		   and b.org_no=c.org_no
+		   <isEqual property="period_flag" compareValue="1">
+		   		and to_char(a.deal_time,'yyyymmdd') = '$stat_date$'/*日*/
+		   </isEqual>
+		   <isEqual property="period_flag" compareValue="2">
+		   		and to_char(a.deal_time,'yyyymmdd') between to_char(trunc(to_date('$stat_date$','yyyymmdd'), 'day'),'yyyymmdd')
+		        	and to_char(trunc(to_date('$stat_date$','yyyymmdd'), 'day')+6,'yyyymmdd')/*周*/
+		   </isEqual>
+		   <isEqual property="period_flag" compareValue="3">
+		   		and to_char(a.deal_time,'yyyymm') = substr('$stat_date$',1,6)/*月*/
+		   </isEqual>
+		   <isEqual property="period_flag" compareValue="4">
+	   			and to_char(a.deal_time,'yyyymmdd') between to_char(trunc(to_date('$stat_date$','yyyymmdd'), 'Q'),'yyyymmdd')
+		        	and to_char(add_months(trunc(to_date('$stat_date$','yyyymmdd'), 'Q'), 3) - 1,'yyyymmdd')/*季*/
+		   </isEqual>
+		   <isEqual property="period_flag" compareValue="5">
+		   		and to_char(a.deal_time,'yyyy') = substr('$stat_date$',1,4)/*年*/
+		   </isEqual>
+		 group by
+		    b.user_name,
+		    c.p_org_no
+     </select> 
+	<select id="getOrgRankList" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+		select
+		    c.org_name,/*部门*/
+		    sum(a.setp_num) setp_num,/*步数*/
+		    rank() over(order by sum(a.setp_num) desc  nulls last) rank1/*排名*/
+		  from t_setp_number a,t_setp_user b,t_sys_org_info c
+		 where a.user_id=b.user_id
+		   and b.org_no=c.org_no
+		   <isEqual property="period_flag" compareValue="1">
+		   		and to_char(a.deal_time,'yyyymmdd') = '$stat_date$'/*日*/
+		   </isEqual>
+		   <isEqual property="period_flag" compareValue="2">
+		   		and to_char(a.deal_time,'yyyymmdd') between to_char(trunc(to_date('$stat_date$','yyyymmdd'), 'day'),'yyyymmdd')
+		        	and to_char(trunc(to_date('$stat_date$','yyyymmdd'), 'day')+6,'yyyymmdd')/*周*/
+		   </isEqual>
+		   <isEqual property="period_flag" compareValue="3">
+		   		and to_char(a.deal_time,'yyyymm') = substr('$stat_date$',1,6)/*月*/
+		   </isEqual>
+		   <isEqual property="period_flag" compareValue="4">
+	   			and to_char(a.deal_time,'yyyymmdd') between to_char(trunc(to_date('$stat_date$','yyyymmdd'), 'Q'),'yyyymmdd')
+		        	and to_char(add_months(trunc(to_date('$stat_date$','yyyymmdd'), 'Q'), 3) - 1,'yyyymmdd')/*季*/
+		   </isEqual>
+		   <isEqual property="period_flag" compareValue="5">
+		   		and to_char(a.deal_time,'yyyy') = substr('$stat_date$',1,4)/*年*/
+		   </isEqual>
+		 group by
+		    c.p_org_no,
+		    c.org_name
+     </select> 
+	
+</sqlMap>
