@@ -22,9 +22,11 @@
         <property name="jndiName"><value>${jndiName}</value></property>
     </bean>
     <!-- jndi DB2 数据源 -->
-    <bean id="dataSource_DB2" class="org.springframework.jndi.JndiObjectFactoryBean">
+	<!--
+     <bean id="dataSource_DB2" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName"><value>${jndiName_DB2}</value></property>
     </bean>    
+    --> 
     <!-- jndi teradata 数据源 -->
     <!--
     <bean id="dataSource_Teradata" class="org.springframework.jndi.JndiObjectFactoryBean">

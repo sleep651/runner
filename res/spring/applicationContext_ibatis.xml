@@ -21,7 +21,7 @@
 		class="org.springframework.orm.ibatis.SqlMapClientTemplate">
 		<property name="sqlMapClient" ref="sqlMap" />
 	</bean>
-	<bean id="sqlMap_DB2"
+<!-- 	<bean id="sqlMap_DB2"
 		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean" >
 		<property name="configLocation">
 			<value>classpath:orm\SqlMapConfig_DB2.xml</value>
@@ -36,7 +36,7 @@
 	<bean id="sqlMapClient_DB2"
 		class="org.springframework.orm.ibatis.SqlMapClientTemplate">
 		<property name="sqlMapClient" ref="sqlMap_DB2" />
-	</bean>	
+	</bean>	 -->
 	<!-- 
 	<bean id="sqlMap_TeraData"
 		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean" >

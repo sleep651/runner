@@ -82,7 +82,7 @@ public class ApiAction extends BaseAction implements ApiLogInterface{
 						ret.setMessage("登录成功!");
 						ret.setEntity(userAccount);
 					}else{
-						ret.setStatus(WsConstants.SHT_NO_SESSION);
+						ret.setStatus(WsConstants.SHT_VALIDATION);
 						ret.setMessage("登录失败：密码错误！");
 					}
 					apiService.insertSetpLogonAsyn(userAccount.getUser_id(), ret.getStatus().toString(), "");
@@ -161,7 +161,7 @@ public class ApiAction extends BaseAction implements ApiLogInterface{
 			2：无效用户;
 		   -1：服务端异常
 		(2)message:返回结果描述
-		(3)entityList：返回Map列表
+		(3)entityList：返回列表
 			rank_flag=1时，返回如下字段：
 				USER_NAME:姓名
 		   		SETP_NUM:步数
@@ -192,6 +192,8 @@ public class ApiAction extends BaseAction implements ApiLogInterface{
     			}else if("2".equals(rank_flag)){
     				ret.setEntityList(apiService.getOrgRankList(period_flag, stat_date));
     			}
+				ret.setStatus(WsConstants.SHT_SUCCESS);
+				ret.setMessage("成功");    			
     		}
     		else{
     			ret = new ResponsePropertyList(WsConstants.SHT_NO_SESSION,"无效的ticket:ticket=" + ticket);
@@ -209,7 +211,6 @@ public class ApiAction extends BaseAction implements ApiLogInterface{
      * 检查ticket是否合法，如果合法，则返回对应的UserAccount，不合法则抛出异常
      ********************************************************/
     public UserAccount checkTicket(String ticket) {
-        
         UserAccount userAccount = null;
         try {
             long ticketNumber = Long.valueOf(ticket);
