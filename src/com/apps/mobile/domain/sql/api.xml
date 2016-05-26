@@ -61,7 +61,11 @@
 		'$remark2$'
 		)
 	</insert>
-	
+	<delete id="delStepNumber" parameterClass="java.util.HashMap">
+		delete from t_setp_number t
+		where t.user_id = '$user_id$'
+			 and to_char(t.deal_time,'yyyymmdd') = to_char(sysdate,'yyyymmdd')		
+	</delete>	
 	<select id="getUserRankList" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
 		select
 		    b.user_name,/*姓名*/

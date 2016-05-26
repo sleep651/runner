@@ -42,6 +42,7 @@ public class ApiService {
 		params.put("setp_num", setp_num);
 		params.put("remark1", remark1);
 		params.put("remark2", remark2);
+		taskDao.update("api.delStepNumber", params);
 		taskDao.insert("api.insertStepNumber", params);
 	}
 	
