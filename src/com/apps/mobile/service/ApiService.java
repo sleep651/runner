@@ -1,6 +1,8 @@
 package com.apps.mobile.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +44,7 @@ public class ApiService {
 		params.put("setp_num", setp_num);
 		params.put("remark1", remark1);
 		params.put("remark2", remark2);
+		params.put("deal_time", new SimpleDateFormat("yyyyMMdd HH:mm:ss").format(new Date()));
 		taskDao.update("api.delStepNumber", params);
 		taskDao.insert("api.insertStepNumber", params);
 	}
@@ -53,10 +56,11 @@ public class ApiService {
         return taskDao.getSqlMapClientTemplate().queryForList("api.getUserRankList", params);
     }
     
-    public List<Map> getOrgRankList(String period_flag,String stat_date) {
+    public List<Map> getOrgRankList(String period_flag,String stat_date,String org_no) {
     	HashMap<String, String> params = new HashMap<String, String>();
     	params.put("period_flag", period_flag);
     	params.put("stat_date", stat_date);
+    	params.put("org_no", org_no);
     	return taskDao.getSqlMapClientTemplate().queryForList("api.getOrgRankList", params);
     }
 	

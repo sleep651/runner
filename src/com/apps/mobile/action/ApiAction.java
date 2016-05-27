@@ -133,6 +133,7 @@ public class ApiAction extends BaseAction implements ApiLogInterface{
 					apiService.insertStepNumber(userAccount.getUser_id(), step_num_int.toString(), "", "");
 					ret = new ResponseEmptyProperty(WsConstants.SHT_SUCCESS,"成功");
 				} catch (Exception e) {
+					e.printStackTrace();
 					ret = new ResponseEmptyProperty(WsConstants.SHT_VALIDATION,"setp_num参数格式错误：setp_num=" + setp_num);
 				}
         	}
@@ -169,9 +170,8 @@ public class ApiAction extends BaseAction implements ApiLogInterface{
 		   		RANK2:部门中排名
 			rank_flag=2时，返回如下字段：
 				ORG_NAME:部门
-		   		SETP_NUM:步数
-		   		RANK1:分行中排名
-		   		RANK2:部门中排名
+		   		SETP_NUM:人均步数
+		   		RANK1:排名
      ********************************************************/    
     @RequestMapping(params = "method=getRankList")
     public void getRankList(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -190,7 +190,7 @@ public class ApiAction extends BaseAction implements ApiLogInterface{
     			if("1".equals(rank_flag)){
     				ret.setEntityList(apiService.getUserRankList(period_flag, stat_date));
     			}else if("2".equals(rank_flag)){
-    				ret.setEntityList(apiService.getOrgRankList(period_flag, stat_date));
+    				ret.setEntityList(apiService.getOrgRankList(period_flag, stat_date,userAccount.getOrg_no()));
     			}
 				ret.setStatus(WsConstants.SHT_SUCCESS);
 				ret.setMessage("成功");    			
