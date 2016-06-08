@@ -17,8 +17,15 @@
 			t.mobile2,
 			t.status,
 			t.crt_time,
-			t.remark
+			t.remark,
+			s.org_name,
+			s.org_name_1st,
+			s.org_name_2nd,
+			s.org_name_3rd,
+			s.org_name_4th
 		from t_setp_user t
+	 left join t_sys_org_info s
+	      on t.org_no=s.org_no		
 		where 1=1 
 		<isNotEmpty property="mobile">
 			and t.mobile='$mobile$'

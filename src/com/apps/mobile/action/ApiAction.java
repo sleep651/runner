@@ -55,6 +55,11 @@ public class ApiAction extends BaseAction implements ApiLogInterface{
 			status:用户状态
 			crt_time:创建时间
 			remark:备注
+			org_name:组织机构名称
+			org_name_1st:备用
+			org_name_2nd:备用
+			org_name_3rd:备用
+			org_name_4th:备用
 			ticket:用户登陆成功后，获得的访问会话的ticket，调用功能接口需要填写该参数；【重要】
 	********************************************************/    
     @RequestMapping(params = "method=login")

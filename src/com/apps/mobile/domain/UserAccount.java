@@ -12,6 +12,12 @@ public class UserAccount {
 	private String crt_time;//创建时间
 	private String remark;//备注
 	
+	private String org_name;//组织机构名称
+	private String org_name_1st;//备用
+	private String org_name_2nd;//备用
+	private String org_name_3rd;//备用
+	private String org_name_4th;//备用
+	
 	private String ticket;		//用户登陆成功后，获得的访问会话的ticket，调用功能接口需要填写该参数；【重要】
 	
 	public String getUser_id() {
@@ -79,5 +85,35 @@ public class UserAccount {
 	}
 	public void setTicket(String ticket) {
 		this.ticket = ticket;
+	}
+	public String getOrg_name() {
+		return org_name;
+	}
+	public void setOrg_name(String org_name) {
+		this.org_name = org_name;
+	}
+	public String getOrg_name_1st() {
+		return org_name_1st;
+	}
+	public void setOrg_name_1st(String org_name_1st) {
+		this.org_name_1st = org_name_1st;
+	}
+	public String getOrg_name_2nd() {
+		return org_name_2nd;
+	}
+	public void setOrg_name_2nd(String org_name_2nd) {
+		this.org_name_2nd = org_name_2nd;
+	}
+	public String getOrg_name_3rd() {
+		return org_name_3rd;
+	}
+	public void setOrg_name_3rd(String org_name_3rd) {
+		this.org_name_3rd = org_name_3rd;
+	}
+	public String getOrg_name_4th() {
+		return org_name_4th;
+	}
+	public void setOrg_name_4th(String org_name_4th) {
+		this.org_name_4th = org_name_4th;
 	}
 }
