@@ -205,7 +205,45 @@ public class ApiAction extends BaseAction implements ApiLogInterface{
     	out.write(objectToJsonString(ret));
     	out.close();
     }
-    
+    /******************************************************
+ 	1.4	updatePassword 【修改密码】
+ 	输入参数：
+ 		String ticket   	登陆成功时返回的ticket
+ 		String new_pwd  	新密码
+ 	返回值：json对象
+ 	字段说明：
+ 		(1)status:返回状态；
+ 			1:成功;
+ 			0:失败;
+ 			2：无效用户;
+ 		   -1：服务端异常
+ 		(2)message:返回结果描述
+      ********************************************************/    
+     @RequestMapping(params = "method=updatePassword")
+     public void updatePassword(HttpServletRequest request, HttpServletResponse response) throws IOException {
+     	response.setHeader("Content-type", "text/html;charset=UTF-8");  
+     	response.setCharacterEncoding("UTF-8");  
+     	PrintWriter out = response.getWriter();
+     	ResponseEmptyProperty ret = new ResponseEmptyProperty();
+     	try {
+     		String ticket = request.getParameter("ticket"); //登陆信息ticket
+     		String new_pwd = request.getParameter("new_pwd");
+             //判断当前ticket
+         	UserAccount userAccount = checkTicket(ticket);
+         	if(userAccount != null){
+				apiService.updatePassword(userAccount.getUser_id(), new_pwd);
+				ret = new ResponseEmptyProperty(WsConstants.SHT_SUCCESS,"成功");
+         	}
+         	else{
+         		ret = new ResponseEmptyProperty(WsConstants.SHT_NO_SESSION,"无效的ticket:ticket=" + ticket);
+         	}
+     	} catch (Exception e) {
+     		e.printStackTrace();
+     		ret = new ResponseEmptyProperty(WsConstants.SHT_ERROR, "服务端异常:" + e.toString());
+     	}
+     	out.write(objectToJsonString(ret));
+     	out.close();
+     }    
     
     /******************************************************
      * 检查ticket是否合法，如果合法，则返回对应的UserAccount，不合法则抛出异常

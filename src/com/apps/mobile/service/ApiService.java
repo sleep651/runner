@@ -63,6 +63,13 @@ public class ApiService {
     	params.put("org_no", org_no);
     	return taskDao.getSqlMapClientTemplate().queryForList("api.getOrgRankList", params);
     }
+
+	public void updatePassword(String user_id, String new_pwd) {
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("user_id", user_id);
+		params.put("new_pwd", new_pwd);
+		taskDao.update("api.updatePassword", params);
+	}
 	
 	public void insertSetpLogonAsyn(String user_id, String result,String remark) {
 		new InsertSetpLogonThread(user_id, result,remark).start();

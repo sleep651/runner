@@ -144,5 +144,8 @@
 		 start with t.p_org_no=(select t.org_no_2nd from t_sys_org_info t where t.org_no='$org_no$')/*参数，当前登录人的组织机构编码*/
 		 order by t.disp_no,t.org_no
      </select> 
+     <update id="updatePassword" parameterClass="java.util.HashMap">
+		update t_setp_user t set t.pwd='$new_pwd$' where user_id='$user_id$'
+     </update>      
 	
 </sqlMap>
