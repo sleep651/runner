@@ -193,7 +193,7 @@ public class ApiAction extends BaseAction implements ApiLogInterface{
     		UserAccount userAccount = checkTicket(ticket);
     		if(userAccount != null){
     			if("1".equals(rank_flag)){
-    				ret.setEntityList(apiService.getUserRankList(period_flag, stat_date));
+    				ret.setEntityList(apiService.getUserRankList(period_flag, stat_date,userAccount.getOrg_no()));
     			}else if("2".equals(rank_flag)){
     				ret.setEntityList(apiService.getOrgRankList(period_flag, stat_date,userAccount.getOrg_no()));
     			}

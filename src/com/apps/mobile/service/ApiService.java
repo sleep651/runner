@@ -49,10 +49,11 @@ public class ApiService {
 		taskDao.insert("api.insertStepNumber", params);
 	}
 	
-    public List<Map> getUserRankList(String period_flag,String stat_date) {
+    public List<Map> getUserRankList(String period_flag,String stat_date,String org_no) {
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("period_flag", period_flag);
 		params.put("stat_date", stat_date);
+		params.put("org_no", org_no);
         return taskDao.getSqlMapClientTemplate().queryForList("api.getUserRankList", params);
     }
     

@@ -75,10 +75,10 @@
 	</delete>	
 	<select id="getUserRankList" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
 		select
-		    b.user_name,/*姓名*/
+		    '【'||c.org_name_3rd||'】: '||b.user_name user_name,/*姓名*/
 		    sum(a.setp_num) setp_num,/*步数*/
 		    rank() over(order by sum(a.setp_num) desc  nulls last) rank1,/*分行中排名*/
-		    rank() over(partition by c.p_org_no order by sum(a.setp_num) desc  nulls last) rank2/*部门中排名*/
+		    rank() over(partition by c.org_no order by sum(a.setp_num) desc  nulls last) rank2/*部门中排名*/
 		  from t_setp_number a,t_setp_user b,t_sys_org_info c
 		 where a.user_id=b.user_id
 		   and b.org_no=c.org_no
@@ -99,9 +99,11 @@
 		   <isEqual property="period_flag" compareValue="5">
 		   		and to_char(a.deal_time,'yyyy') = substr('$stat_date$',1,4)/*年*/
 		   </isEqual>
-		 group by
-		    b.user_name,
-		    c.p_org_no
+		   and c.org_no_2nd in(select t.org_no_2nd from t_sys_org_info t where t.org_no='$org_no$') --参数，当前登录人的组织机构编码
+	 		group by
+                   c.org_name_3rd,
+	    		b.user_name,
+	    		c.org_no
      </select> 
 	<select id="getOrgRankList" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
 		select
