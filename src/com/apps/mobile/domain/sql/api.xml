@@ -99,7 +99,7 @@
 		   <isEqual property="period_flag" compareValue="5">
 		   		and to_char(a.deal_time,'yyyy') = substr('$stat_date$',1,4)/*年*/
 		   </isEqual>
-		   and c.org_no_2nd in(select t.org_no_2nd from t_sys_org_info t where t.org_no='$org_no$') --参数，当前登录人的组织机构编码
+		   and c.org_no_2nd in(select t.org_no_2nd from t_sys_org_info t where t.org_no='$org_no$') /*参数，当前登录人的组织机构编码*/
 	 		group by
                    c.org_name_3rd,
 	    		b.user_name,
