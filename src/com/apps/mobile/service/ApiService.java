@@ -47,6 +47,7 @@ public class ApiService {
 		params.put("deal_time", new SimpleDateFormat("yyyyMMdd HH:mm:ss").format(new Date()));
 		taskDao.update("api.delStepNumber", params);
 		taskDao.insert("api.insertStepNumber", params);
+		taskDao.insert("api.insertStepNumberHis", params);
 	}
 	
     public List<Map> getUserRankList(String period_flag,String stat_date,String org_no) {

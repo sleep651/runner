@@ -68,6 +68,23 @@
 		'$remark2$'
 		)
 	</insert>
+	<insert id="insertStepNumberHis" parameterClass="java.util.HashMap">
+		insert into t_setp_number_his
+		(
+			user_id,
+			setp_num,
+			deal_time,
+			remark1,
+			remark2
+		)
+		values(
+		'$user_id$',
+		'$setp_num$',
+		to_date('$deal_time$','yyyymmdd hh24:mi:ss'),
+		'$remark1$',
+		'$remark2$'
+		)
+	</insert>
 	<delete id="delStepNumber" parameterClass="java.util.HashMap">
 		delete from t_setp_number t
 		where t.user_id = '$user_id$'
@@ -75,7 +92,7 @@
 	</delete>	
 	<select id="getUserRankList" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
 		select
-		    '【'||c.org_name_3rd||'】: '||b.user_name user_name,/*姓名*/
+		    c.org_name_3rd||':'||b.user_name user_name,/*姓名*/
 		    sum(a.setp_num) setp_num,/*步数*/
 		    rank() over(order by sum(a.setp_num) desc  nulls last) rank1,/*分行中排名*/
 		    rank() over(partition by c.org_no order by sum(a.setp_num) desc  nulls last) rank2/*部门中排名*/
