@@ -47,7 +47,7 @@ public class ApiService {
 		params.put("deal_time", new SimpleDateFormat("yyyyMMdd HH:mm:ss").format(new Date()));
 		taskDao.update("api.delStepNumber", params);
 		taskDao.insert("api.insertStepNumber", params);
-		taskDao.insert("api.insertStepNumberHis", params);
+		//taskDao.insert("api.insertStepNumberHis", params);
 	}
 	
     public List<Map> getUserRankList(String period_flag,String stat_date,String org_no) {
@@ -64,6 +64,13 @@ public class ApiService {
     	params.put("stat_date", stat_date);
     	params.put("org_no", org_no);
     	return taskDao.getSqlMapClientTemplate().queryForList("api.getOrgRankList", params);
+    }
+    public Map getLastVersion() {
+    	List<Map> list = taskDao.getSqlMapClientTemplate().queryForList("api.getLastVersion");
+    	if(list!=null&&list.size()>0){
+    		return list.get(0);
+    	}
+    	return null;
     }
 
 	public void updatePassword(String user_id, String new_pwd) {

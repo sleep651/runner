@@ -249,7 +249,38 @@ public class ApiAction extends BaseAction implements ApiLogInterface{
      	out.write(objectToJsonString(ret));
      	out.close();
      }    
-    
+     /******************************************************
+ 	1.5	getLastVersion 【获取最新版本信息】
+ 	输入参数：
+ 		无
+ 	返回值：json对象
+ 	字段说明：
+ 		(1)status:返回状态；
+ 			1:成功;
+ 			0:失败;
+ 		   -1：服务端异常
+ 		(2)message:返回结果描述
+ 		(3)entity：返回最新版本信息
+ 				V_NO:版本号
+ 		   		V_DOWN:下载地址
+      ********************************************************/    
+     @RequestMapping(params = "method=getLastVersion")
+     public void getLastVersion(HttpServletRequest request, HttpServletResponse response) throws IOException {
+     	response.setHeader("Content-type", "text/html;charset=UTF-8");  
+     	response.setCharacterEncoding("UTF-8");  
+     	PrintWriter out = response.getWriter();
+     	ResponseProperty<Map> ret = new ResponseProperty<Map>();
+     	try {
+     		ret.setEntity(apiService.getLastVersion());
+     		ret.setStatus(WsConstants.SHT_SUCCESS);
+			ret.setMessage("成功");    
+     	} catch (Exception e) {
+     		e.printStackTrace();
+     		ret = new ResponseProperty(WsConstants.SHT_ERROR, "服务端异常:" + e.toString());
+     	}
+     	out.write(objectToJsonString(ret));
+     	out.close();
+     }    
     /******************************************************
      * 检查ticket是否合法，如果合法，则返回对应的UserAccount，不合法则抛出异常
      ********************************************************/

@@ -173,5 +173,7 @@
      <update id="updatePassword" parameterClass="java.util.HashMap">
 		update t_setp_user t set t.pwd='$new_pwd$' where user_id='$user_id$'
      </update>      
-	
+	 <select id="getLastVersion" resultClass="java.util.HashMap" parameterClass="java.util.HashMap">
+	 	select t.v_no,t.v_down from t_version t
+	 </select>
 </sqlMap>
