@@ -42,9 +42,9 @@ public class Ticket {
         Long ticketNumber = Calendar.getInstance().getTime().getTime();
 
         ref.ticketMap.put(ticketNumber, userAccount);
-    	for (Long key : ref.ticketMap.keySet()) {
-    		System.out.println("@ticketMap:"+key + " = " + ref.ticketMap.get(key));
-    	}
+//    	for (Long key : ref.ticketMap.keySet()) {
+//    		System.out.println("@ticketMap:"+key + " = " + ref.ticketMap.get(key));
+//    	}
         return ticketNumber;
     }
     public static synchronized Boolean removeUserAccount(UserAccount userAccount) {
@@ -63,7 +63,7 @@ public class Ticket {
 						value.getUser_id()!=null&&
 						value.getUser_id().equals(userAccount.getUser_id())){
         			//刪除原來的ticket
-        			System.out.println("remove:"+key);
+        			//System.out.println("remove:"+key);
         			//map.remove(key);
         			it.remove();
         			ret = true;
